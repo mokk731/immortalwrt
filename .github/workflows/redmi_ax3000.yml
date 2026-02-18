@@ -1,8 +1,10 @@
 name: redmi_ax3000
 
 on:
+  # workflow_dispatch:
+  # push:
+  repository_dispatch:
   workflow_dispatch:
-  push:
 
 jobs:
   build:
