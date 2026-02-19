@@ -23,14 +23,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Hook the openwrt_core URL for opkg
-        run: |
-          OWNER="${GITHUB_REPOSITORY%%/*}"
-          REPO="${GITHUB_REPOSITORY#*/}"
-          TIME="$(curl "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" | jq -r .created_at)"
-
-          echo "ci-$(date -d "${TIME}" -u +'%Y%m%d-%H%M%S')-${GITHUB_SHA:0:8}" >version
-          sed -i "s|%U/targets/%S/packages|https://${OWNER}.github.io/${REPO}/${GITHUB_REF_NAME}/%R|" include/feeds.mk
+     
 
       - name: Update and install feeds
         run: |
@@ -42,9 +35,7 @@ jobs:
           cat <<EOF | sed -E 's/^  //' >.config
             CONFIG_TARGET_ipq50xx=y
             CONFIG_TARGET_ipq50xx_arm=y
-            CONFIG_TARGET_MULTI_PROFILE=y
-            CONFIG_TARGET_ALL_PROFILES=y
-            CONFIG_TARGET_PER_DEVICE_ROOTFS=y
+            CONFIG_TARGET_ipq50xx_arm_DEVICE_redmi_ax3000=y
 
             CONFIG_IB=y
             # CONFIG_IB_STANDALONE is not set
@@ -56,7 +47,12 @@ jobs:
 
             CONFIG_PACKAGE_luci=y
 
-            CONFIG_PACKAGE_luci-app-easymesh=y
+            #CONFIG_PACKAGE_luci-app-easymesh=y
+            CONFIG_PACKAGE_luci-theme-material=y
+            CONFIG_PACKAGE_luci-app-passwall=y
+            CONFIG_PACKAGE_luci-app-zerotier=y
+            CONFIG_PACKAGE_luci-app-wechatpush=y
+            
           EOF
           make defconfig
 
