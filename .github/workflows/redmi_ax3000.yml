@@ -49,7 +49,7 @@ jobs:
 
             # CONFIG_PACKAGE_luci-app-easymesh=y
             CONFIG_PACKAGE_luci-theme-material=y
-            CONFIG_PACKAGE_luci-app-passwall=y
+            # CONFIG_PACKAGE_luci-app-passwall=y
             CONFIG_PACKAGE_luci-app-zerotier=y
             CONFIG_PACKAGE_luci-app-wechatpush=y
             
